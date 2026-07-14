@@ -1,6 +1,6 @@
-# FireCash Paper Wallet
+# ZKas Paper Wallet
 
-A single-file, **offline** paper-wallet generator for [FireCash](https://github.com/firecash/firecash-rusty)
+A single-file, **offline** paper-wallet generator for [ZKas](https://github.com/firecash/firecash-rusty)
 — the shielded-by-default (Orchard / Halo 2) rusty-kaspa fork.
 
 **Live:** https://firecash.github.io/firecash-paper-wallet/
@@ -20,7 +20,7 @@ pocket change:
 4. Store the seed offline. The seed is the whole secret; anyone who sees it can spend.
 
 The address is deterministically derived from the seed, so it can always be recomputed by
-importing the seed into any FireCash wallet (`shielded-pay`, `firecash-walletd`, or the
+importing the seed into any ZKas wallet (`shielded-pay`, `firecash-walletd`, or the
 web/mobile wallet).
 
 ## Verify it's offline
