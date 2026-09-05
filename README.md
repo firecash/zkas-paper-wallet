@@ -37,9 +37,16 @@ To confirm this page was built from that source, rebuild the wasm and compare it
 against the copy embedded here:
 
 ```
-sha256 = a22dfabab0b6129ae4d924a51a1a12608523c1dc3e07965c2897f87dc8a936e9
-size   = 498824 bytes
+sha256 = ea0ec55a2cef0bb7f3cd6ce80b0e5c218693e0e97be49c80a73587b1eefcd409
+size   = 594044 bytes
 ```
+
+Built from [`zkas-signer`](https://github.com/firecash/zkas-signer) commit `fa1b6e8`
+(adds the watch-only View key generator). Earlier revisions of this page embedded:
+
+| page revision | sha256 | size |
+|---|---|---|
+| 2026-08-22 (`fcaed0d`) | `a22dfabab0b6129ae4d924a51a1a12608523c1dc3e07965c2897f87dc8a936e9` | 498824 |
 
 Extract the embedded copy from this page and check it yourself:
 
