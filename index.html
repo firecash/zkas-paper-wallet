@@ -3893,10 +3893,18 @@ const $ = (id) => document.getElementById(id);
 const err = (m) => { $("err").textContent = m || ""; };
 
 function drawQR(elId, text) {
+  if (typeof text !== "string" || text.length === 0 || text.length > 500) return;
+  if (!/^[A-Za-z0-9:._-]+$/.test(text)) return;
   const qr = qrcode(0, "M");
   qr.addData(text);
   qr.make();
-  $(elId).innerHTML = qr.createSvgTag(4, 0);
+  const svg = qr.createSvgTag(4, 0);
+  if (svg.indexOf("<script") !== -1 || svg.indexOf("onload") !== -1 || svg.indexOf("onerror") !== -1) return;
+  const host = $(elId);
+  host.textContent = "";
+  const doc = new DOMParser().parseFromString(svg, "image/svg+xml");
+  const node = doc.documentElement;
+  if (node && node.nodeName.toLowerCase() === "svg") host.appendChild(document.importNode(node, true));
 }
 
 let current = null; // {seed_hex, address}
