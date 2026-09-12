@@ -4,6 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ZKas Paper Wallet (offline)</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; media-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta name="referrer" content="no-referrer" />
 <style>
   :root{
     --bg:#07100e; --panel:#0c1815; --panel-2:#10211c;
@@ -126,6 +129,16 @@
 </style>
 </head>
 <body>
+<script>
+// Refuse to run inside a frame: a framing page could overlay its own UI on
+// top of the seed. Meta CSP cannot carry frame-ancestors, so this check does it.
+try {
+  if (window.self !== window.top) window.top.location.href = window.self.location.href;
+} catch (e) {
+  document.documentElement.textContent = "Refusing to run inside a frame. Open the saved file directly.";
+  throw new Error("framed");
+}
+</script>
 <div class="wrap">
 
   <div class="top">
@@ -159,6 +172,7 @@
       <div class="grow"></div>
       <button id="gen" class="primary" disabled>Loading…</button>
       <button id="print" disabled>Print</button>
+      <button id="forget" disabled>Forget this wallet</button>
     </div>
 
     <div class="divider"></div>
@@ -3934,7 +3948,7 @@ async function boot() {
     return;
   }
   $("gen").disabled = false; $("gen").textContent = "Generate new wallet";
-  $("print").disabled = false; $("derive").disabled = false;
+  $("print").disabled = false; $("derive").disabled = false; $("forget").disabled = false;
 
   $("gen").onclick = () => {
     try { render(new_wallet($("net").value)); }
@@ -3956,6 +3970,18 @@ async function boot() {
     $("seedbox").classList.remove("hidden");
     $("qrseedbox").classList.remove("hidden");
     window.print();
+  };
+  $("forget").onclick = () => {
+    // Drop everything this page knows about the wallet: the held object, every
+    // rendered secret, the seed input, and the QR codes. Strings already handed
+    // out cannot be clawed back, so do this before anyone else uses the machine
+    // — and close the tab when done on a shared computer.
+    current = null;
+    $("addr").textContent = ""; $("fvk").textContent = ""; $("seed").textContent = "";
+    $("qraddr").textContent = ""; $("qrfvk").textContent = ""; $("qrseed").textContent = "";
+    $("seedin").value = "";
+    $("out").style.display = "none";
+    err("Forgotten on this page. Generate a new wallet or re-derive to continue.");
   };
 }
 

@@ -62,6 +62,17 @@ PY
 (Built with wasm-bindgen 0.2.100, release profile. See zkas-signer's README for the exact
 build steps.)
 
+## Printers keep copies — plan for it
+
+A printed seed is only as offline as the printer:
+
+- Prefer a printer plugged straight into the air-gapped machine (USB), not a
+  network or cloud printer that stores jobs on its own disk or account.
+- After printing, clear the printer's queue and, on printers with storage,
+  use the manufacturer's secure-erase. Press **Forget this wallet** on the page
+  and close the tab when you are done on a shared machine.
+- Treat any test print like the real thing and destroy it (shred/burn).
+
 ## License
 
 MIT OR Apache-2.0.
